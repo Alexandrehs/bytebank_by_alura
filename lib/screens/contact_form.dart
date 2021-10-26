@@ -50,8 +50,8 @@ class _ContactFormState extends State<ContactForm> {
                     final name = _nameController.text;
                     final accountNumber = _accountNumberController.text;
                     if (name.isNotEmpty && accountNumber.isNotEmpty) {
-                      final Contact newContact =
-                          Contact(name: name, accountNumber: accountNumber);
+                      final Contact newContact = Contact(
+                          id: 0, name: name, accountNumber: accountNumber);
                       Navigator.pop(context, newContact);
                     }
                   },
