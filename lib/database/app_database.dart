@@ -2,17 +2,28 @@ import 'package:bytebank/models/contact.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
-Future<Database> createDatabase() {
-  return getDatabasesPath().then((dbPath) {
-    final String path = join(dbPath, 'bytebank.db');
-    return openDatabase(path, onCreate: (db, version) {
-      db.execute('CREATE TABLE contacts('
-          'id INTEGER PRIMARY KEY,'
-          'name TEXT,'
-          'account_number TEXT'
-          ')');
-    }, version: 1);
-  });
+// Future<Database> createDatabase() {
+//   return getDatabasesPath().then((dbPath) {
+//     final String path = join(dbPath, 'bytebank.db');
+//     return openDatabase(path, onCreate: (db, version) {
+//       db.execute(
+//           'CREATE TABLE contacts(id INTEGER PRIMARY KEY, name TEXT, account TEXT)');
+//     }, version: 1);
+//   });
+// }
+
+Future<Database> createDatabase() async {
+  final database = openDatabase(
+    join(await getDatabasesPath(), 'contacts_database.db'),
+    onCreate: (db, version) {
+      return db.execute(
+        'CREATE TABLE contacts(id INTEGER PRIMARY KEY, name TEXT, account TEXT)',
+      );
+    },
+    version: 1,
+  );
+
+  return database;
 }
 
 Future<int> insertContact(Contact contact) async {
@@ -34,9 +45,9 @@ Future<List<Contact>> findAll() async {
     maps.length,
     (index) {
       return Contact(
-        id: maps[index]['id'],
+        //id: maps[index]['id'],
         name: maps[index]['name'],
-        accountNumber: maps[index]['accountNumber'],
+        account: maps[index]['account'],
       );
     },
   );
