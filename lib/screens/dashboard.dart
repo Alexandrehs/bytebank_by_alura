@@ -47,7 +47,7 @@ class _DashboardState extends State<Dashboard> {
                         size: 32,
                       ),
                       Text(
-                        'Contacts',
+                        'Contatos',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16.0,

@@ -1,3 +1,5 @@
+import 'package:bytebank/dao/contacts_dao.dart';
+import 'package:bytebank/database/app_database.dart';
 import 'package:bytebank/models/contact.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +14,8 @@ class _ContactFormState extends State<ContactForm> {
   final TextEditingController _nameController = new TextEditingController();
 
   final TextEditingController _accountController = new TextEditingController();
+
+  final ContactsDAO contactsDAO = ContactsDAO();
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +55,9 @@ class _ContactFormState extends State<ContactForm> {
                     if (name.isNotEmpty && accountNumber.isNotEmpty) {
                       final Contact newContact =
                           Contact(name: name, account: accountNumber);
-                      Navigator.pop(context, newContact);
+                      contactsDAO.insertContact(newContact).then(
+                            (value) => Navigator.pop(context),
+                          );
                     }
                   },
                 ),
